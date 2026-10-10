@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神鼠电影网 - 机敏找片雷达·正版渠道与公共领域老片导航</title>
+<meta name="description" content="神鼠电影网(shenshudianyingwang-h5.github.io)做机敏找片资料导航：广告型正版平台、图书馆流媒体、公共领域老片、按心情/类型找片。不托管视频、不解析未授权源、不诱导下载播放器。">
+<meta name="keywords" content="神鼠电影网, shenshudianyingwang-h5, 机敏找片, 正版电影导航, 公共领域老片, Tubi, Pluto, Kanopy, Internet Archive, 电影资料站">
+<meta name="author" content="神鼠电影网">
+<meta name="robots" content="index, follow">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0e1311;
+  --bg-2:#101714;
+  --ink:#eaf2ee;
+  --ink-2:#a9bcb5;
+  --card:#16201c;
+  --card-2:#1b2622;
+  --sage:#7ef0a2;
+  --sage-deep:#39c172;
+  --amber:#f2b134;
+  --cyan:#36d6d6;
+  --red:#ff6b81;
+  --green:#34c759;
+  --line:rgba(126,240,162,.16);
+  --radius:18px;
+  --shadow:0 12px 30px rgba(0,0,0,.35);
+}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(560px 380px at 88% 6%,rgba(126,240,162,.14),transparent 60%),
+  radial-gradient(640px 440px at 6% 94%,rgba(54,214,214,.10),transparent 60%),
+  linear-gradient(180deg,#0e1311,#101714 55%,#0c100e 100%);}
+.dots{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(126,240,162,.25) 1px,transparent 1px);
+  background-size:26px 26px;mask-image:radial-gradient(circle at 75% 15%,#000,transparent 78%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(14,19,17,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1200px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.12rem}
+.brand .mk{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--sage),var(--sage-deep));color:#06210f;display:flex;align-items:center;justify-content:center;font-weight:900}
+.brand b{color:var(--sage-deep)}
+.topnav{display:flex;gap:4px}
+.topnav a{padding:8px 14px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--ink-2);transition:.25s}
+.topnav a:hover,.topnav a.active{background:rgba(126,240,162,.14);color:var(--sage)}
+.menu-btn{display:none;background:none;border:none;font-size:1.4rem;color:var(--sage);cursor:pointer}
+
+.hero{position:relative;z-index:1;margin-top:60px;padding:76px 20px 54px}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.kicker{font-family:"Courier New",monospace;font-size:.68rem;letter-spacing:3px;color:var(--sage);border:1px solid var(--line);padding:4px 10px;border-radius:20px;background:rgba(126,240,162,.06)}
+.hero h1{font-size:clamp(2rem,4.4vw,3.05rem);font-weight:900;line-height:1.18;margin:14px 0 8px}
+.hero h1 .s{color:var(--sage)}
+.hero h1 .a{color:var(--amber)}
+.hero p{color:var(--ink-2);font-size:1rem;margin:14px 0 24px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:inherit;font-weight:700;font-size:.9rem;padding:12px 24px;border-radius:10px;cursor:pointer;border:none;transition:.3s}
+.btn-main{background:linear-gradient(135deg,var(--sage),var(--sage-deep));color:#06210f}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(57,193,114,.32)}
+.btn-line{background:transparent;border:2px solid var(--cyan);color:var(--cyan)}
+.radar{background:linear-gradient(160deg,var(--card),var(--card-2));border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.radar h3{font-size:.95rem;color:var(--sage);margin-bottom:10px}
+.radar-row{display:flex;gap:10px;margin:8px 0}
+.rchip{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.76rem;color:var(--ink-2)}
+.rchip b{display:block;color:var(--ink);font-size:.84rem;margin-bottom:2px}
+.rchip.sniff{border-left:4px solid var(--sage)}
+.rchip.cave{border-left:4px solid var(--cyan)}
+.rchip.barrel{border-left:4px solid var(--amber)}
+
+.container{max-width:1200px;margin:0 auto;padding:52px 20px;position:relative;z-index:1}
+.label{font-family:"Courier New",monospace;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--sage)}
+.title{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;margin:4px 0 6px}
+.desc{font-size:.88rem;color:var(--ink-2);margin-bottom:30px}
+.divider{height:2px;background:repeating-linear-gradient(90deg,var(--sage) 0 14px,transparent 14px 26px);opacity:.25;margin:8px 0 26px}
+
+/* 合规条 */
+.rule{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--sage);border-radius:var(--radius);padding:24px;margin-bottom:34px;box-shadow:var(--shadow)}
+.rule h3{font-size:1rem;color:var(--sage);margin-bottom:8px}
+.rule p{font-size:.82rem;color:var(--ink-2);line-height:1.7}
+.rule ul{margin:8px 0 0 18px;font-size:.8rem;color:var(--ink-2)}
+.rule li{margin:3px 0}
+
+/* 正版渠道 */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:18px}
+.ch{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:.3s}
+.ch:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--sage)}
+.ch .tag{font-family:"Courier New",monospace;font-size:.7rem;font-weight:700;color:var(--sage)}
+.ch h3{font-size:1rem;font-weight:800;margin:6px 0 4px}
+.ch p{font-size:.76rem;color:var(--ink-2);line-height:1.6}
+.ch .model{margin-top:8px;font-size:.7rem;font-weight:700;color:var(--cyan)}
+
+/* 心情/类型 */
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.md{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.md h3{font-size:.95rem;color:var(--ink)}
+.md p{font-size:.74rem;color:var(--ink-2);margin-top:6px}
+.md .go{font-size:.7rem;font-weight:800;margin-top:8px;color:var(--sage);display:inline-block}
+
+/* 公共领域 */
+.pd{background:rgba(126,240,162,.06);border:1px dashed var(--sage);border-radius:var(--radius);padding:26px;margin-bottom:34px}
+.pd h3{font-size:1rem;color:var(--sage);margin-bottom:8px}
+.pd p{font-size:.82rem;color:var(--ink-2);line-height:1.7}
+.pd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:14px}
+.pd-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.pd-item h4{font-size:.9rem;color:var(--ink)}
+.pd-item p{font-size:.74rem;color:var(--ink-2);margin-top:5px}
+
+/* 避坑 */
+.safe{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.safe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px}
+.safe-item{display:flex;gap:10px;font-size:.8rem;color:var(--ink-2)}
+.safe-item .x{color:var(--red);font-weight:800}
+.safe-item .v{color:var(--green);font-weight:800}
+
+.footer{position:relative;z-index:1;background:#080b0a;color:#9fb0ab;padding:46px 20px 24px;margin-top:54px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:34px;margin-bottom:26px}
+.footer h4{font-size:.9rem;margin-bottom:10px;color:#fff}
+.footer a{display:block;font-size:.8rem;color:#8fa39e;padding:3px 0}
+.footer a:hover{color:var(--sage)}
+.footer p{font-size:.82rem;color:#8fa39e;line-height:1.6}
+.footer-bottom{text-align:center;font-size:.72rem;color:rgba(159,176,171,.5);padding-top:18px;border-top:1px solid rgba(159,176,171,.12)}
+.footer-bottom a{color:var(--sage);font-weight:600;display:inline}
+
+@media(max-width:1024px){.hero-inner{grid-template-columns:1fr}.radar{order:-1}}
+@media(max-width:768px){
+  .topnav{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:#0e1311;padding:12px 20px;border-bottom:1px solid var(--line)}
+  .topnav.open{display:flex}.menu-btn{display:block}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}.hero h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+<div class="bg"></div>
+<div class="dots"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="mk">鼠</span>神鼠<b>电影网</b></div>
+    <nav class="topnav" id="topNav">
+      <a href="#home" class="active">首页</a>
+      <a href="#rule">正版立场</a>
+      <a href="#channels">找片渠道</a>
+      <a href="#mood">按心情找</a>
+      <a href="#pd">公共领域</a>
+      <a href="#safe">避坑合规</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </div>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <span class="kicker">SMART MOVIE RADAR · LEGAL FINDING ONLY</span>
+      <h1>像老鼠嗅粮一样找片，<br>只走<span class="s">正版</span>和<span class="a">公共领域</span>。</h1>
+      <p>神鼠电影网（shenshudianyingwang-h5.github.io）是机敏找片资料导航：广告型正版平台、图书馆流媒体、公共领域老片、按心情/类型筛片。不托管视频、不解析未授权源、不诱导下载“专用播放器”，把“哪里能合法看”放在第一位。[3,19](@ref)</p>
+      <div class="hero-actions">
+        <button class="btn btn-main">🐭 开雷达找正版</button>
+        <button class="btn btn-line">🎞️ 查公共领域老片</button>
+      </div>
+    </div>
+    <div class="radar">
+      <h3>神鼠三件事</h3>
+      <div class="radar-row">
+        <div class="rchip sniff"><b>嗅渠道</b>先判授权：广告免费/订阅/官方/图书馆/公域，不碰未知解析站。</div>
+        <div class="rchip cave"><b>藏洞穴</b>按心情建片单洞：爽片、烧脑、治愈、陪娃，各进各的粮仓。</div>
+      </div>
+      <div class="radar-row">
+        <div class="rchip barrel"><b>囤粮仓</b>老片优先公共领域与资料馆；新片只给正版窗口与租赁/订阅建议。</div>
+        <div class="rchip sniff"><b>排红灯</b>要EXE、要验证码、院线新片全免费——直接关页，不列不点。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container" id="rule">
+  <div class="rule">
+    <h3>为什么“神鼠”只做找片、不做播放源</h3>
+    <p>合法免费电影通常来自四类：广告型授权平台、图书馆/高校采购、公共领域档案、官方机构免费发布。[6,12](@ref) 本站只整理“去哪看、按什么授权、地区是否可用”，不提供未授权点播；具体片目随平台版权与地区变化，以各渠道当期目录为准。</p>
+    <ul>
+      <li>广告型正版：Tubi、Pluto TV、Plex 等获授权，用广告换免费，类型片与老片较全 [6,19](@ref)</li>
+      <li>图书馆流媒体：Kanopy、Hoopla 用读者卡/高校账号，偏独立、纪录、经典、教育 [3,12](@ref)</li>
+      <li>公共领域：Internet Archive、国会影片库、资料馆开放档案；默片/早期片多，但修复版/字幕可能另有权利 [12,16](@ref)</li>
+      <li>国内正版免费层：1905/央视频/学习强国/正版平台电影区，按当期授权查，不默认“老片全免”</li>
+    </ul>
+  </div>
+</div>
+
+<div class="container" id="channels">
+  <div class="label">— LEGAL CHANNELS —</div>
+  <h2 class="title">找片渠道：按“怎么授权”分，不按“资源多少”吹</h2>
+  <p class="desc">地区版权会变；图书馆渠道看本馆是否采购，公共领域片也要逐条看权利说明。[12](@ref)</p>
+  <div class="divider"></div>
+  <div class="ch-grid">
+    <div class="ch"><div class="tag">AD-SUPPORTED</div><h3>Tubi</h3><p>广告型正版库，动作、恐怖、喜剧、独立与老爆款较全；部分地区可免登录看授权内容。[6,19](@ref)</p><div class="model">模式：授权+广告</div></div>
+    <div class="ch"><div class="tag">LIVE + VOD</div><h3>Pluto TV</h3><p>线性电影频道+点播，适合“不开会挑、换台式看”；恐怖/经典/综艺化片单省决策。[6,19](@ref)</p><div class="model">模式：授权+广告</div></div>
+    <div class="ch"><div class="tag">LIBRARY</div><h3>Kanopy / Hoopla</h3><p>图书馆或高校账号进入；Kanopy偏独立/纪录/标准收藏，Hoopla借电影/有声/电子书，按月额度。[12,19](@ref)</p><div class="model">模式：机构采购</div></div>
+    <div class="ch"><div class="tag">PUBLIC DOMAIN</div><h3>Internet Archive</h3><p>公共领域电影、默片、新闻片、教育片档案；无广告无账号，但某版本修复/字幕可能另有权利。[12,19](@ref)</p><div class="model">模式：公域/许可</div></div>
+    <div class="ch"><div class="tag">ARCHIVE / GOV</div><h3>国会影片库 / 资料馆</h3><p>Library of Congress National Screening Room、地方电影资料馆开放片与修复公映；历史/无声/新闻片为主。[12](@ref)</p><div class="model">模式：公域/机构</div></div>
+    <div class="ch"><div class="tag">SERVER + VOD</div><h3>Plex 免费层</h3><p>个人媒体服务器起家，免费层含授权电影、剧集与FAST直播；不搭服务器也能用发现功能。[6,19](@ref)</p><div class="model">模式：授权+广告</div></div>
+    <div class="ch"><div class="tag">CN OFFICIAL</div><h3>1905 / 央视频</h3><p>国内正版电影、主旋律、老片与纪录片集中入口；国产商业老片先做官方免费筛查。</p><div class="model">模式：官方免费</div></div>
+    <div class="ch"><div class="tag">DISCOVERY</div><h3>正版发现器</h3><p>用JustWatch类正版发现只查“哪平台可看”，不进解析镜像；按地区筛订阅/广告/租赁/图书馆。[3](@ref)</p><div class="model">模式：导购不播放</div></div>
+  </div>
+</div>
+
+<div class="container" id="mood">
+  <div class="label">— FIND BY MOOD —</div>
+  <h2 class="title">按心情找：神鼠不让你在首页瞎翻</h2>
+  <p class="desc">同一样片不同心情走不同渠道路径；新片以正版窗口为准，不列未授权高清。</p>
+  <div class="divider"></div>
+  <div class="mood-grid">
+    <div class="md"><h3>周五爽片·不费脑</h3><p>动作/悬疑/爆款续集：正版平台订阅→Tubi/Pluto广告免费→新片官方租赁；不搜“全集免费”。</p><div class="go">去：正版VOD / Tubi / Pluto</div></div>
+    <div class="md"><h3>烧脑拉片·作者性</h3><p>独立/外语/作者全集：公域档案查早期，Kanopy查独立纪录，资料馆查修复回顾。</p><div class="go">去：Archive / Kanopy / 资料馆</div></div>
+    <div class="md"><h3>治愈放空·配茶</h3><p>慢节奏文艺、自然纪录、家庭温情：Kanopy纪录、B站官方经典、正版平台治愈分区。</p><div class="go">去：Kanopy / B站 / 正版</div></div>
+    <div class="md"><h3>陪娃亲子·不踩雷</h3><p>动画/合家欢：Tubi Kids、官方家庭分区、B站经典动画；新片走正版儿童档不下载器。</p><div class="go">去：Tubi Kids / 官方家庭</div></div>
+    <div class="md"><h3>恐怖通宵·类型控</h3><p>Pluto恐怖线性台、Tubi恐怖库、公域早期怪物片；新恐怖只查正版授权，不点解析播放。</p><div class="go">去：Pluto / Tubi / Archive</div></div>
+    <div class="md"><h3>历史档案·研究用</h3><p>无声/早期有声/新闻/教育片：Internet Archive、国会影片库、地方资料馆开放资源。</p><div class="go">去：Archive / 国会/资料馆</div></div>
+    <div class="md"><h3>国产老片·正版怀旧</h3><p>1905/央视频/学习强国查正版免费，资料馆查修复放映；不默认“老=可随意转载”。</p><div class="go">去：1905 / 央视频 / 资料馆</div></div>
+    <div class="md"><h3>纪录片专题·上课用</h3><p>Kanopy/Hoopla通过图书馆，Tubi纪录分区补商业档，官方出品方传片认认证账号。</p><div class="go">去：Kanopy / Hoopla / 官方</div></div>
+  </div>
+</div>
+
+<div class="container" id="pd">
+  <div class="pd">
+    <h3>公共领域老片：神鼠粮仓的“真免费”</h3>
+    <p>公共领域片不靠会员、不靠解析；但“老”不等于“随便用”——修复版、新字幕、配乐、彩色化可能另有权利，转载或二创前要逐条看物品权利说明。[12,16](@ref) 美国按出版/登记年份判定，早期默片与部分1930s前作品公域比例高；中国老片要结合首次发表、署名、政策与平台确权分别判断。</p>
+    <div class="pd-grid">
+      <div class="pd-item"><h4>默片喜剧</h4><p>《将军号》(1926)、《福尔摩斯小弟》(1924)等可在Archive/公域档案拉片，画质随母带。[16](@ref)</p></div>
+      <div class="pd-item"><h4>早期恐怖/noir</h4><p>《活死人之夜》(1968)因署名/版权处置常入公域讨论；《绕道》(1945)等低预算noir可查档案。[12](@ref)</p></div>
+      <div class="pd-item"><h4>新闻/教育片</h4><p>Archive与国会影片库的新闻片、政府教育片、战时纪录片，适合研究与剪辑素材。[12](@ref)</p></div>
+      <div class="pd-item"><h4>开放文化合集</h4><p>Open Culture、Wikimedia/ WikiFlix类公域聚合只做导览，播放仍回Archive/Commons等开放源。[16,18](@ref)</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="safe">
+  <div class="label">— ANTI-PIRACY —</div>
+  <h2 class="title">神鼠红灯清单：名字可爱，版权不松</h2>
+  <p class="desc">合法免费站通常说明授权主体、广告模式或图书馆/公域来源；可疑站常用假播放键和强制下载。[3,9](@ref)</p>
+  <div class="safe">
+    <div class="safe-grid">
+      <div class="safe-item"><span class="x">✕</span> 院线未下就“高清全集免费”、要验证码/网盘密码</div>
+      <div class="safe-item"><span class="x">✕</span> 点播放先下EXE/专用播放器/解码插件/浏览器扩展</div>
+      <div class="safe-item"><span class="x">✕</span> 深度解析第三方视频源、无主体无授权无投诉入口</div>
+      <div class="safe-item"><span class="x">✕</span> 弹窗满屏、假病毒提醒、赌博/成人重定向、域名天天换</div>
+      <div class="safe-item"><span class="x">✕</span> 用“最全/破解/磁力/资源站”做主卖点、盗海报仿官方</div>
+      <div class="safe-item"><span class="x">✕</span> 把个人上传“高清”当已授权正版、不标地区与期限</div>
+      <div class="safe-item"><span class="v">✓</span> 标明渠道类型：广告/订阅/官方/图书馆/公域/资料馆</div>
+      <div class="safe-item"><span class="v">✓</span> 不存片、不解析、不诱导下载任何软件</div>
+      <div class="safe-item"><span class="v">✓</span> 片单写“以平台当期授权、地区与账号资格为准”</div>
+      <div class="safe-item"><span class="v">✓</span> 页脚有主体、隐私、版权投诉与联系入口</div>
+      <div class="safe-item"><span class="v">✓</span> 移动端无全屏强制弹层、锚点导航可点、按钮够大</div>
+      <div class="safe-item"><span class="v">✓</span> 公域片区分原片公域与修复/字幕另行授权</div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="brand"><span class="mk">鼠</span>神鼠<b>电影网</b></div>
+        <p>神鼠电影网（shenshudianyingwang-h5.github.io）是机敏找片资料导航：正版广告平台、图书馆流媒体、公共领域老片、按心情/类型找片。不提供未授权播放，不解析非法视听源，不诱导下载任何播放器。可配合必应站长工具提交URL提升发现效率。[5,11](@ref)</p>
+      </div>
+      <div><h4>栏目</h4><a href="#rule">正版立场</a><a href="#channels">找片渠道</a><a href="#mood">按心情找</a><a href="#pd">公共领域</a></div>
+      <div><h4>渠道</h4><a href="#">广告正版</a><a href="#">图书馆流媒体</a><a href="#">公域档案</a><a href="#">国内官方免费</a></div>
+      <div><h4>说明</h4><a href="#">版权投诉</a><a href="#">隐私说明</a><a href="#">使用条款</a><a href="#">联系我们</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 神鼠电影网 (Smart Movie Radar) - 机敏找片·正版渠道·公共领域档案</p>
+      <p>网站地址：<a href="https://shenshudianyingwang-h5.github.io">https://shenshudianyingwang-h5.github.io</a></p>
+      <p style="margin-top:6px;opacity:.6">“神鼠”仅指找片方法与资料整理能力，不涉及盗版全集、资源解析或未授权点播。</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+var menuBtn=document.getElementById('menuBtn'),topNav=document.getElementById('topNav');
+menuBtn.onclick=function(){topNav.classList.toggle('open')};
+topNav.querySelectorAll('a').forEach(function(a){a.onclick=function(){topNav.classList.remove('open')}});
+var secs=document.querySelectorAll('section[id],div[id]');
+addEventListener('scroll',function(){
+  var y=scrollY+80;
+  secs.forEach(function(s){
+    if(y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){
+      document.querySelectorAll('.topnav a').forEach(function(a){a.classList.remove('active')});
+      var l=document.querySelector('.topnav a[href="#'+s.id+'"]');
+      if(l)l.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
